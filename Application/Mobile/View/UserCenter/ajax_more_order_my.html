@@ -1,0 +1,73 @@
+<volist name="list" id="vo">
+    <div class="order-b">
+        <a class="order-t flex1" href="{:U('Mobile/UserCenter/order_detail_my',array('order_id'=>$vo['order_id']))}">
+            <span>下单时间：{$vo['add_time']}</span>
+            <span><if condition="$vo['order_status'] eq 0">待确认
+                       <elseif condition="$vo['order_status'] eq 1" />审核通过
+                <elseif condition="$vo['order_status'] eq 2" />审核不通过</if></span>
+        </a>
+        <a class="order-item flex1"  href="{:U('Mobile/UserCenter/order_detail_my',array('order_id'=>$vo['order_id']))}">
+            <!--<div class="order-i">-->
+            <!--<img src="__MOBILE__/images/class_example.png" />-->
+            <!--</div>-->
+            <div class="order-sess">
+                <h1>{$vo['cat_name']} {$vo['material_name']} {$vo['spec']}</h1>
+                <div class="o-sess flex1">
+                    <div class="o-left">
+                        <!--<span>生产商：{$vo['manufacturer']}</span>-->
+                        <span>备注：{$vo['user_note']}</span>
+                    </div>
+                    <div class="o-right">
+                        <!--<span>￥{$vo['goods_price']}</span>-->
+                        <span>X{$vo['goods_num']}</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <div class="order-edi flex1">
+            <button class="del_order" data-id="{$vo['order_id']}">删除订单</button>
+            <!--<div class="order-cut flex1">-->
+            <!--<span>共{$vo['goods_num']}件商品</span>-->
+            <!--<span class="flex1">合计：<i>￥{$vo['total_amount']}</i></span>-->
+            <!--</div>-->
+        </div>
+    </div>
+</volist>
+<if condition="$list eq null">
+    <div class="more" style="margin-top: .5rem;">暂无数据</div>
+</if>
+<input type="hidden" value="{$page}" class="load_page">
+<input type="hidden" value="{$max_page}" class="load_page_max">
+<script type="text/javascript" src="__MOBILE__/layer/layer.js"></script>
+
+<script>
+    $(".del_order").click(function () {
+        var order_id = $(this).attr('data-id');
+        var a = $(this);
+        layer.confirm('确定删除吗？', {
+            btn: ['删除','取消'] //按钮
+        }, function(){
+
+            $.ajax({
+                type: "post",
+                data: {order_id: order_id},
+                url: "{:U('Mobile/UserCenter/del_order_my')}",
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        layer.msg(data.info, {icon: 1});
+
+                    } else {
+                        layer.msg('删除成功', {icon: 1});
+                        a.parent().parent(".order-b").remove();
+                    }
+                }
+            })
+        }, function(){
+            // layer.msg('也可以这样', {
+            //     time: 20000, //20s后自动关闭
+            //     btn: ['明白了', '知道了']
+            // });
+        });
+    });
+</script>

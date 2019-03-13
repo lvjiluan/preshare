@@ -1,0 +1,37 @@
+<extend name="Common/base"/>
+<block name="style">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/fileupload/css/jquery.fileupload.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__HR__/css/data.css"/>
+</block>
+<block name="body">
+<div class="container">
+    <div class="r_container">
+        <div class="content">
+            <form id="orderForm" action="__ACTION__" method="post" class="ajaxForm">
+            <div class="r_items">
+                <ul>
+                    <li><div>&#12288;&#12288;&#12288;&#12288;名称</div><div><input type="text" class="inputtext" placeholder="请输入用户昵称" name="nickname" value="{$info['nickname']}"></div></li>
+                    <li><div>&#12288;&#12288;&#12288;手机号</div><div><input type="text" maxlength="11" class="inputtext" placeholder="请输入手机号" name="mobile" value="{$info['mobile']}"></div></li>
+                    <li><div>&#12288;&#12288;&#12288;&#12288;邮箱</div><div><input type="email" class="inputtext" placeholder="请输入邮箱" name="email" value="{$info['email']}"></div></li>
+                    <li><div>&#12288;&#12288;&#12288;所在地</div><div>{$info['city_name']}</div></li>
+                    <li><div>&#12288;&#12288;可提金额</div><div>{:fen_to_yuan($info['withdrawable_amount'])}</div></li>
+                    <li><div>&#12288;&#12288;推荐人数</div><div>{$info['recommended_number']}</div></li>
+                    <li><div>&#12288;&#12288;招揽人数</div><div>{$info['recruit_number']}</div></li>
+                    <li><div>&#12288;&#12288;是否认证</div><div><if condition="$info.is_auth eq 1">已完成<else/>未完成</if></div></li>
+                    <li><div>&#12288;&#12288;擅长领域</div><div>{$info['like_tags']}</div></li>
+                    <li><div>&#12288;&#12288;账户余额</div><div>{:fen_to_yuan($info['user_money'])}</div></li>
+                    <li><div>&#12288;&#12288;注册时间</div><div>{:time_format($info['register_time'])}</div></li>
+                    <li><div>上次登录ip&#12288;</div><div>{$info['last_login_ip']}</div></li>
+                    <li><div>上次登录时间</div><div>{:time_format($info['last_login_time'])}</div></li>
+                </ul>
+            </div>
+            <div class="buttonstyle" style="padding-bottom: 50px">
+                <input class="inputbutton" type="submit" value="确定修改">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</block>
+<block name="script">
+</block>

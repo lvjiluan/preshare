@@ -1,0 +1,221 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="https://img.ybl-group.com/mescroll/1.4.0/mescroll.min.css">
+    <script src="https://img.ybl-group.com/mescroll/1.4.0/mescroll.min.js" charset="utf-8"></script>
+    <style type="text/css">
+        .mescroll{
+            position: fixed;
+            top: 44px;
+            bottom: 0;
+            height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
+        }
+    </style>
+</block>
+<block name="body">
+<body class="pad-head bggary pad-nav">
+    <!-- head -->
+    <div class="head flex1">
+        <h1>碳钢</h1>
+    </div>
+    <div class="swiper-b">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <volist name="list['banner']" id="vo">
+                <div class="swiper-slide">
+                    <img src="{$vo['content']}" />
+                </div>
+                </volist>
+            </div>
+            <!-- Add Pagination -->
+            <!-- <div class="swiper-pagination"></div> -->
+            <!-- Add Arrows -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
+    </div>
+    <!-- 导航 -->
+
+
+    <!-- news -->
+    <div class="news-wapper mescroll" id="mescroll">
+        <div class="news-title flex1">
+            <h1>新闻动态</h1>
+            <!--<a>-->
+                <!--<img src="__MOBILE__/images/more.png">-->
+            <!--</a>-->
+        </div>
+        <div class="news-b" id="newsList">
+            <volist name="list" id="vo">
+                <a class="news-li flex1" href="{:U('News/detail',array('id'=>$vo['article_id']))}">
+                    <div class="news-i">
+                        <img src="{$vo['thumb_img']}">
+                    </div>
+                    <div class="news-sess">
+                        <h1>{$vo['title']} </h1>
+                        <p>{$vo['introduce']|getSubstr=0,40}</p>
+                    </div>
+                </a>
+            </volist>
+            <!--<a class="news-nomore">-->
+                <!--<span>没有更多内容了</span>-->
+            <!--</a>-->
+        </div>
+        <!--<notempty name="list">-->
+            <!--<div class="more">加载更多</div>-->
+        <!--</notempty>-->
+    </div>
+
+</block>
+<block name="script">
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="__MOBILE__/js/swiper.min.js"></script>
+    <script src="__MOBILE__/js/mescroll.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--mescroll本身不依赖jq,这里为了模拟发送ajax请求-->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            //创建MeScroll对象
+            var mescroll = new MeScroll("mescroll", {
+                down: {
+                    auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+                    callback: downCallback //下拉刷新的回调
+                },
+                up: {
+                    auto: true, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+                    isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+                    callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+                    toTop:{ //配置回到顶部按钮
+                        src : "../res/img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+                        //offset : 1000
+                    }
+                }
+            });
+
+
+//下拉刷新的回调
+            function downCallback() {
+                $.ajax({
+                    url: "{:U('Mobile/News/ajax_more')}",
+                    success: function(data) {
+                        //联网成功的回调,隐藏下拉刷新的状态;
+                        mescroll.endSuccess(); //无参. 注意结束下拉刷新是无参的
+                        //设置数据
+                        //setXxxx(data);//自行实现 TODO
+                        if(data){
+                            $("#newsList").appendChild(data);
+                        }
+                    },
+                    error: function(data) {
+                        //联网失败的回调,隐藏下拉刷新的状态
+                        mescroll.endErr();
+                    }
+                });
+            }
+
+            //上拉加载的回调 page = {num:1, size:10}; num:当前页 默认从1开始, size:每页数据条数,默认10
+            function upCallback(page) {
+                $.ajax({
+                    //url: 'xxxxxx?num=' + page.num + "&size=" + page.size, //如何修改page.num从0开始 ?
+                    url: "{:U('Mobile/News/ajax_more')}",
+                    success: function(curPageData) {
+                       //console.log(curPageData);return false;
+                        //联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+                        //mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空,显示empty配置的内容;
+                        //列表如果无下一页数据,则提示无更多数据,(注意noMoreSize的配置)
+
+                        //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+                        //必传参数(当前页的数据个数, 总页数)
+
+                        //console.log(curPageData.data);return false;
+                        var info=curPageData.data;
+                        mescroll.endByPage(info.page_size, info.page_count);
+                        console.log(info.page_size); console.log(info.page_count);
+
+                        //方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+                        //必传参数(当前页的数据个数, 总数据量)
+                        //mescroll.endBySize(curPageData.length, totalSize);
+
+                        //方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+                        //必传参数(当前页的数据个数, 是否有下一页true/false)
+                        //mescroll.endSuccess(curPageData.length, hasNext);
+
+                        //方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+                        //如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+                        //如果传了hasNext,则翻到第二页即可显示无更多数据.
+                        //mescroll.endSuccess(curPageData.length);
+
+                        //结束下拉刷新的 mescroll.endSuccess()无参.
+                        //结束上拉加载 curPageData.length必传的原因:
+                        // 1.使配置的noMoreSize 和 empty生效
+                        // 2.判断是否有下一页的首要依据: 当传的值小于page.size时,则一定会认为无更多数据.
+                        //     比传入的totalPage, totalSize, hasNext具有更高的判断优先级
+                        // 3.当传的值等于page.size时,才会取totalPage, totalSize, hasNext判断是否有下一页
+                        // 传totalPage, totalSize, hasNext主要目的是避免方法四描述的小问题
+
+                        //设置列表数据
+                        //setListData(curPageData);//自行实现 TODO
+                        //var listDom=document.getElementById("newsList");
+                        if(curPageData){
+                            // $("#newsList").appendChild(curPageData);
+                            $("#newsList").append('1111');
+                        }
+                    },
+                    error: function(e) {
+                        //联网失败的回调,隐藏下拉刷新和上拉加载的状态
+                        mescroll.endErr();
+                    }
+                });
+            }
+
+
+
+
+
+
+        });
+    </script>
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 10,
+            centeredSlides: true,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        //
+        //
+        // function test() {
+        //     alert('sdfs');
+        //     $.ajax({
+        //         type: "get",
+        //         data: {
+        //             platformId: '2e2302818a996993c08f2f07c9606e79',
+        //             appKey: 'phone',
+        //             mobile: '13468167559',
+        //             bizType: 'reg_mobile'
+        //         },
+        //         url: "http://ipoducuat.tjfae.com/service?channel=userMobileCodeRequest",
+        //         success: function (data) {
+        //             console.log(data);
+        //
+        //         }
+        //     })
+        // }
+        // test();
+
+    </script>
+</block>

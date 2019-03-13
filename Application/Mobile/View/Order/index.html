@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+</head>
+
+<body class="pad-head osubmit bggary confirm">
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>确认订单</h1>
+    </div>
+    <if condition="$address neq ''">
+    <a class="adress-wapper flex1" href="{:U('UserCenter/addEditAddress',array('address_id'=>$address['address_id'],'source'=>'order','goods_id'=>$goodsInfo['goods_id'],'goods_num'=>$goods_num))}">
+        <div class="adress">
+            <div class="adr-t flex1">
+                <span>收货人：{$address['consignee']}</span>
+                <span>{$address['mobile']}</span>
+            </div>
+            <div class="adr-sess">
+                <img src="__MOBILE__/images/address.png">
+                收货地址：{$address['address']}
+            </div>
+        </div>
+        <span class="adr-more"><img src="__MOBILE__/images/address_icon_more.png" /></span>
+    </a>
+        <else/>
+        <a class="adress-wapper flex1" href="{:U('UserCenter/addEditAddress',array('source'=>'order','goods_id'=>$goodsInfo['goods_id'],'goods_num'=>$goods_num))}">
+            <div class="adress">
+                请填写收货地址
+            </div>
+            <span class="adr-more"><img src="__MOBILE__/images/address_icon_more.png" /></span>
+        </a>
+    </if>
+    <div class="pay-detial">
+        <!--<div class="pay-time">-->
+            <!--订单详情：2018-09-08 17:23-->
+        <!--</div>-->
+        <div class="pay-item flex1">
+            <div class="pay-i">
+                <img src="__MOBILE__/images/class_example.png">
+            </div>
+            <div class="pay-sess">
+                <h1 class="pay-h1">
+                    {$goodsInfo['cat_name']} {$goodsInfo['material_name']}{$goodsInfo['width_name']}*{$goodsInfo['height_name']}
+                </h1>
+                <div class="pay-s flex1">
+                    <div class="pay-l">
+                        <span>生产商： {$goodsInfo['manufacturer']} </span>
+                        <span class="pay-price" style="font-size: .32rem;color: #FE5E60;">￥{$goodsInfo['price']}</span>
+                    </div>
+                    <div class="pay-r">
+                        <span class="pay-num">x{$goods_num}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pay-ul">
+        <textarea class="cout-text" placeholder="请在此填写您的特殊需求" style="border:none;padding-top:5px;width: 100%;" id="user_note"></textarea>
+    </div>
+    <!--<ul class="pay-ul">-->
+        <!--<li>-->
+            <!--<span>-->
+                <!--订单确认时间:-->
+            <!--</span>-->
+            <!--2018-09-08 17:23-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<span>-->
+                <!--订单确认时间:-->
+            <!--</span>-->
+            <!--2018-09-08 17:23-->
+        <!--</li>-->
+    <!--</ul>-->
+    <!-- service -->
+    <div class="service flex1">
+        <span></span>
+        <div class="ser-pri">
+            <input type="hidden" value="{$goodsInfo['goods_id']}" name="goods_id" id="goods_id"/>
+            <input type="hidden" value="{$address['address_id']}" name="address_id" id="address_id"/>
+            <input type="hidden" value="{$goodsInfo['width']}" name="width" id="width"/>
+            <input type="hidden" value="{$goodsInfo['height']}" name="height" id="height"/>
+            <input type="hidden" value="{$goodsInfo['material']}" name="material" id="material"/>
+            <input type="hidden" value="{$goods_num}" name="goods_num" id="goods_num"/>
+            <span>总价：<i>￥{$goods_price}</i></span>
+            <button id="submit">确认</button>
+        </div>
+    </div>
+</body>
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript">
+    $("#submit").click(function(){
+        var goods_id=$("#goods_id").val();
+        var address_id=$("#address_id").val();
+        var width=$("#width").val();
+        var height=$("#height").val();
+        var material=$("#material").val();
+        var goods_num=$("#goods_num").val();
+        var user_note=$("#user_note").val();
+        $.ajax({
+            type: "get",
+            url: "{:U('Mobile/Order/add_order')}",
+            data: {goods_id:goods_id,address_id:address_id,width:width,height:height,material:material,goods_num:goods_num,user_note:user_note},
+            //dataType: "json",
+            success: function(data){
+                console.log(data);
+               if(data.status==1){
+                  layer.msg('提交成功',{time:3000});
+                  window.location.href="/Mobile/UserCenter/order_list";
+               }else{
+                   layer.msg(data.info);
+               }
+            }
+        });
+    });
+</script>

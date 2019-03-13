@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+    <style>
+        .made-wapper .made-li .made-inb {
+            flex: 1;
+        }
+        .made-wapper .made-li .made-inb input[type="text"] {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="pad-head pad-nav" style="background: #fff">
+    <!-- head -->
+    <div class="head flex1">
+        <!--<a class="head-back" href="{:U('UserCenter/messagelist')}">-->
+        <a class="head-back" href="{:U('Index/index')}">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>我要订轧</h1>
+    </div>
+
+    <ul class="made-wapper">
+        <li class="made-li flex1">
+            <span class="made-name">品名</span>
+            <div class="made-inb">
+                <input type="text" placeholder="请输入商品品名" name="cat_name" id="cat_name">
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">材质</span>
+            <div class="made-inb">
+                <input type="text" placeholder="请输入商品材质"  name="material_name" id="material_name">
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">规格</span>
+            <div class="made-inb">
+                <input type="text" placeholder="请输入商品规格,例:2.5*1250"  name="spec" id="spec">
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">数量</span>
+            <div class="made-inb">
+                <input type="text" placeholder="请输入商品数量"  name="goods_num" id="goods_num">
+                <span>吨</span>
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">联系方式</span>
+            <div class="made-inb">
+                <input type="text" placeholder="请输入联系方式"  name="mobile" id="mobile">
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">公司名称</span>
+            <div class="made-inb">
+                <input type="text" placeholder="输入公司名称"  name="consignee" id="consignee">
+            </div>
+        </li>
+        <li class="made-li flex1">
+            <span class="made-name">备注</span>
+            <div class="made-textb">
+                <textarea placeholder="请输入商品的特殊需求" name="user_note" id="user_note" maxlength="200"></textarea>
+                <span>限200字</span>
+            </div>
+        </li>
+    </ul>
+    <button class="submit" onclick="checkSubmit()">提交</button>
+
+</body>
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript">
+    function checkSubmit(){
+        var cat_name=$.trim($("#cat_name").val());
+        var material_name=$.trim($("#material_name").val());
+        var spec=$.trim($("#spec").val());
+        var goods_num=$.trim($("#goods_num").val());
+        var mobile=$.trim($("#mobile").val());
+        var consignee=$.trim($("#consignee").val());
+        var user_note=$.trim($("#user_note").val());
+        if(cat_name==''){
+           layer.msg('请输入品名'); return false;
+        }
+        if(material_name==''){
+            layer.msg('请输入材质'); return false;
+        }
+        if(spec==''){
+            layer.msg('请输入规格'); return false;
+        }
+        if(goods_num==''){
+            layer.msg('请输入数量'); return false;
+        }
+        if(mobile==''){
+            layer.msg('请输入联系方式'); return false;
+        }
+        if(consignee==''){
+            layer.msg('请输入公司名称'); return false;
+        }
+        if(user_note){
+            if(user_note.length>10){
+                layer.msg('请输入200以内的字数'); return false;
+            }
+        }
+
+        $.ajax({
+            type: "post",
+            url: "{:U('Mobile/Order/add_order_my')}",
+            data: {cat_name:cat_name,material_name:material_name,spec:spec,goods_num:goods_num,mobile:mobile,consignee:consignee,user_note:user_note},
+            //dataType: "json",
+            success: function(data){
+                console.log(data);
+                if(data.status==1){
+                    layer.msg('提交成功',{time:3000});
+                    window.location.href="/Mobile/UserCenter/order_list_my";
+                }else{
+                    layer.msg('提交失败');
+                }
+            }
+        });
+
+    }
+</script>

@@ -1,0 +1,14 @@
+<volist name="list" id="vo">
+    <a class="product-li flex1" href="{:U('Goods/detail',array('goods_id'=>$vo['goods_id']))}">
+        <div class="pro-i">
+            <img src="{$vo['thumb_img']}" onerror="javascript:this.src='__MOBILE__/images/zhanwei.png';"/>
+        </div>
+        <div class="pro-sess flex2">
+            <h1>{$vo['cat_name']} {$vo['material']} {$vo['width']}*{$vo['height']}</h1>
+            <div class="flex1">
+                <!--<span>件重：25.337</span>-->
+                <span><i>{$vo['price']}</i>元/吨</span>
+            </div>
+        </div>
+    </a>
+</volist>

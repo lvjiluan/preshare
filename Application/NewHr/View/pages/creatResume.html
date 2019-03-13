@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/base.css"/>
+    <!--<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="../css/creatResume.css"/>
+
+</head>
+<body>
+<div class="container">
+    <div class="cr_container">
+        <div class="addresume">
+            <input type="button" class="inputbutton" value="+ 添加简历">
+        </div>
+        <div class="content">
+            <div class="cr_title">
+                <div class="cr_num">
+                    1
+                </div>
+                <div class="cr_name">
+                    <div>基本信息</div>
+                    <div>请尽量详细填写简历的基本信息</div>
+                </div>
+            </div>
+            <div class="cr_pack1">
+                <ul>
+                    <li>
+                        <span class="pack_name">
+                            *真实姓名:
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入真实姓名">
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *<span>手&#8197;&#8197;机&#8197;&#8197;号:</span>
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入手机号">
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *年&#12288;&#12288;龄:
+                        </span>
+                        <span class="pack_info">
+                            <!--<input type="date" >-->
+                           <select class="ages">
+                               <option value="">请选择年</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                            <select class="ages">
+                                <option value="">请选择月</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                            <select class="ages">
+                                <option value="">请选择日</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *性&#12288;&#12288;别:
+                        </span>
+                        <span class="pack_info sex">
+                            <span class="boy bg_active">
+                                男
+                            </span>
+                            <span class="girl">
+                                女
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *婚&#12288;&#12288;否:
+                        </span>
+                        <span class="pack_info">
+                           <select class="marriage">
+                               <option value="">保密</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *语言能力:
+                        </span>
+                        <span class="pack_info language">
+                           <span class="lanactive">英语良好</span>
+                            <span>英语流利</span>
+                            <span>专业级英语</span>
+                            <span>其它语言</span>
+                            <span>普通话良好</span>
+                            <span>不限</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *岗位性质:
+                        </span>
+                        <span class="pack_info">
+                           <select class="marriage">
+                               <option value="">请选择岗位性质</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *户&#12288;&#12288;籍:
+                        </span>
+                        <span class="pack_info">
+                           <select class="ages">
+                               <option value="">请选择省</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                            <select class="ages">
+                                <option value="">请选择市</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *工作地区:
+                        </span>
+                        <span class="pack_info">
+                           <select class="ages">
+                               <option value="">请选择省</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                            <select class="ages">
+                                <option value="">请选择市</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *求职方向:
+                        </span>
+                        <span class="pack_info">
+                           <select class="ages">
+                               <option value="">请选择</option>
+                               <option value="">1</option>
+                               <option value="">2</option>
+                           </select>
+                            <select class="ages">
+                                <option value="">请选择</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name">
+                            *电子邮箱:
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入电子邮箱">
+                        </span>
+                    </li>
+                    <li>
+                        <span class="pack_name pack_intro">
+                            *自我介绍:
+                        </span>
+                        <span class="pack_info">
+                           <textarea class="textarea"></textarea>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="cr_title">
+                <div class="cr_num">
+                    2
+                </div>
+                <div class="cr_name">
+                    <div>教育经历</div>
+                    <div>详尽的教育经历为您的简历增添色彩</div>
+                </div>
+            </div>
+            <div class="cr_pack1">
+                <div class="clearfix">
+                    <div class="fl edu_school">
+                        <div>
+                            <span>青岛农业大学</span>
+                            <span>计算机科学与技术</span>
+                            <span>本科</span>
+                        </div>
+                        <div>
+                            连续六次获得学院奖学金
+                        </div>
+                    </div>
+                    <div class="fr edu_date">
+                        <span>2012-2016</span>
+                        <span><img src="../images/bj.png">编辑</span>
+                        <span><img src="../images/sc.png">删除</span>
+                    </div>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                        <span class="pack_name">
+                            学校名称:
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入学校名称">
+                        </span>
+                        </li>
+                        <li>
+                        <span class="pack_name">
+                            学&#12288;&#12288;历:
+                        </span>
+                        <span class="pack_info">
+                            <select class="marriage">
+                                <option value="">请选择学历</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+
+                        </span>
+                        </li>
+                        <li>
+                        <span class="pack_name">
+                            专&#12288;&#12288;业:
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入专业">
+                        </span>
+                        </li>
+                        <li>
+                        <span class="pack_name">
+                            开始时间:
+                        </span>
+                        <span class="pack_info">
+                            <input type="date" class="inputdate">
+                        </span>
+                            <span class="pack_name">
+                            结束时间:
+                        </span>
+                        <span class="pack_info">
+                            <input type="date" class="inputdate">
+                        </span>
+                            <span class="pack_info">
+                                <input type="checkbox" style="vertical-align: middle">至今
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <input type="button" class="edu_tj" value="添加">
+            </div>
+            <div class="cr_title">
+                <div class="cr_num">
+                    3
+                </div>
+                <div class="cr_name">
+                    <div>工作经历</div>
+                    <div>详尽的工作经历可以更快找到工作</div>
+                </div>
+            </div>
+            <div class="cr_pack1">
+                <div class="work">
+                    <div class="clearfix">
+                        <div class="fl">
+                            <span>济南朗宁电力科技有限公司</span>
+                            <span>Java</span>
+                        </div>
+                        <div class="fr edu_date">
+                            <span>2012-2016</span>
+                            <span><img src="../images/bj.png">编辑</span>
+                            <span><img src="../images/sc.png">删除</span>
+                        </div>
+                    </div>
+                    <div class="work_info">
+                        相关技术：采用 SpringBootMyBatisShiro 框架Vue2视图框架 Quartz 2.3定时器log4j日志管理功能模块：用户管理、角色管理、部门管理、菜单管理、 SQL 监控、定时任务、字典管理、文件管理、系统日志、资产管理、招标管理、投标管理
+                    </div>
+                </div>
+                <div class="addwork">
+                    <ul>
+                        <li>
+                        <span class="pack_name">
+                            公司名称:
+                        </span>
+                        <span class="pack_info">
+                            <input class="inputtext1" placeholder="请输入公司名称">
+                        </span>
+                        </li>
+                        <li>
+                        <span class="pack_name">
+                            职&#12288;&#12288;位:
+                        </span>
+                        <span class="pack_info">
+                            <select class="marriage">
+                                <option value="">请选择职位</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
+
+                        </span>
+                        </li>
+                        <li>
+                        <span class="pack_name">
+                            开始时间:
+                        </span>
+                        <span class="pack_info">
+                            <input type="date" class="inputdate">
+                        </span>
+                            <span class="pack_name">
+                            结束时间:
+                        </span>
+                        <span class="pack_info">
+                            <input type="date" class="inputdate">
+                        </span>
+                            <span class="pack_info">
+                                <input type="checkbox" style="vertical-align: middle">至今
+                            </span>
+                        </li>
+                        <li>
+                        <span class="pack_name pack_intro">
+                            描述信息:
+                        </span>
+                        <span class="pack_info ">
+                            <textarea class="textarea"></textarea>
+                        </span>
+                        </li>
+                    </ul>
+                </div>
+                <input type="button" class="edu_tj" value="添加">
+
+            </div>
+            <input type="button" class="keepbutton" value="保存简历">
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script>
+    $(".sex span ").click(function () {
+                $(".sex span").removeClass("bg_active")
+                $(this).addClass("bg_active");
+            }
+    )
+
+    $(".language span ").click(function () {
+                $(".language span").removeClass("lanactive")
+                $(this).addClass("lanactive");
+            }
+    )
+</script>
+</body>
+</html>

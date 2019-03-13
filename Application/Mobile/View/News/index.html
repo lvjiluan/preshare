@@ -1,0 +1,134 @@
+<extend name="Public/base"/>
+<block name="body">
+<body class="pad-head bggary pad-nav">
+    <!-- head -->
+    <div class="head flex1">
+        <h1>碳钢</h1>
+    </div>
+    <div class="swiper-b">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <volist name="list['banner']" id="vo">
+                <div class="swiper-slide">
+                    <img src="{$vo['content']}" />
+                </div>
+                </volist>
+            </div>
+            <!-- Add Pagination -->
+            <!-- <div class="swiper-pagination"></div> -->
+            <!-- Add Arrows -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
+    </div>
+    <!-- 导航 -->
+
+
+    <!-- news -->
+    <div class="news-wapper mescroll" id="mescroll">
+        <div class="news-title flex1">
+            <h1>新闻动态</h1>
+            <!--<a>-->
+                <!--<img src="__MOBILE__/images/more.png">-->
+            <!--</a>-->
+        </div>
+        <div class="news-b" id="newsList">
+            <volist name="list" id="vo">
+                <a class="news-li flex1" href="{:U('News/detail',array('id'=>$vo['article_id']))}">
+                    <div class="news-i">
+                        <img src="{$vo['thumb_img']}">
+                    </div>
+                    <div class="news-sess">
+                        <h1>{$vo['title']} </h1>
+                        <p>{$vo['introduce']|getSubstr=0,40}</p>
+                    </div>
+                </a>
+            </volist>
+            <if condition="$page elt  $page_count ">
+                <a class="news-nomore news_more" data-id="{$page+1}">
+                    <span >查看更多</span>
+                </a>
+                <else/>
+                <a class="news-nomore">
+                    <span>没有更多内容了</span>
+                </a>
+            </if>
+        </div>
+        <!--<notempty name="list">-->
+            <!--<div class="more">加载更多</div>-->
+        <!--</notempty>-->
+    </div>
+
+</block>
+<block name="script">
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="__MOBILE__/js/swiper.min.js"></script>
+
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 10,
+            centeredSlides: true,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        //
+        //
+        // function test() {
+        //     alert('sdfs');
+        //     $.ajax({
+        //         type: "get",
+        //         data: {
+        //             platformId: '2e2302818a996993c08f2f07c9606e79',
+        //             appKey: 'phone',
+        //             mobile: '13468167559',
+        //             bizType: 'reg_mobile'
+        //         },
+        //         url: "http://ipoducuat.tjfae.com/service?channel=userMobileCodeRequest",
+        //         success: function (data) {
+        //             console.log(data);
+        //
+        //         }
+        //     })
+        // }
+        // test();
+        $(".news_more").click(function(){
+          var p=$(this).attr("data-id");
+            ajaxList(p);
+        });
+
+        function ajaxList(page){
+            $.ajax({
+                type:"post",
+                data:{p:page},
+                url:"{:U('Mobile/News/ajax_more')}",
+                success:function(data){
+                    console.log(data);
+                    if(data.status == 0){
+                        // layer.msg(data.info);
+                      //  $(".more").hide();
+                    }else{
+                        $("#newsList").append(data);
+                        $(".news_more").hide();
+                        $(".news-nomore").last().show();
+                    }
+                }
+            })
+        }
+    </script>
+</block>

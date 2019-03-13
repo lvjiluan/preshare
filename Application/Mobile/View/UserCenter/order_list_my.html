@@ -1,0 +1,239 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+    <style>
+       .more{    text-align: center;
+           color: #ccc;
+           font-size: 16px}
+       .order-edi{
+           justify-content: flex-end;
+       }
+    </style>
+</block>
+<block name="body">
+<body class="pad-head pad-nav bggary">
+<!--<canvas id="canvas" style="margin:0 auto;"></canvas>-->
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>我的订轧</h1>
+    </div>
+<ul class="order-title flex1">
+    <li class="order-li order-active" data-id="">
+        <span>全部(<span class="all_count">{$count}</span>)</span>
+    </li>
+    <li class="order-li" data-id="0">
+        <span>待确认(<span class="no_count">{$count_no}</span>)</span>
+    </li>
+    <li class="order-li" data-id="1">
+        <span>已确认(<span class="yes_count">{$count_yes}</span>)</span>
+    </li>
+</ul>
+<!--<section  id="pullrefresh" class="section-content mui-content mui-scroll-wrapper">-->
+    <!--<div  class="mui-scroll">-->
+    <div class="order-wapper content">
+        <input type="hidden" value="{$page}" class="load_page">
+        <input type="hidden" value="{$max_page}" class="load_page_max">
+        <volist name="list" id="vo">
+        <div class="order-b">
+            <a class="order-t flex1" href="{:U('Mobile/UserCenter/order_detail_my',array('order_id'=>$vo['order_id']))}">
+                <span>下单时间：{$vo['add_time']}</span>
+                <span><if condition="$vo['order_status'] eq 0">待确认
+                       <elseif condition="$vo['order_status'] eq 1" />审核通过
+                       <elseif condition="$vo['order_status'] eq 2" />审核不通过
+                </if></span>
+            </a>
+            <a class="order-item flex1"  href="{:U('Mobile/UserCenter/order_detail_my',array('order_id'=>$vo['order_id']))}">
+                <!--<div class="order-i">-->
+                    <!--<img src="__MOBILE__/images/class_example.png" />-->
+                <!--</div>-->
+                <div class="order-sess">
+                    <h1>{$vo['cat_name']} {$vo['material_name']} {$vo['spec']}</h1>
+                    <div class="o-sess flex1">
+                        <div class="o-left">
+                            <!--<span>生产商：{$vo['manufacturer']}</span>-->
+                            <span>备注：{$vo['user_note']}</span>
+                        </div>
+                        <div class="o-right">
+                            <!--<span>￥{$vo['goods_price']}</span>-->
+                            <span>X{$vo['goods_num']}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="order-edi flex1">
+                <button class="del_order" data-id="{$vo['order_id']}">删除订单</button>
+                <!--<div class="order-cut flex1">-->
+                    <!--<span>共{$vo['goods_num']}件商品</span>-->
+                    <!--<span class="flex1">合计：<i>￥{$vo['total_amount']}</i></span>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </volist>
+        <if condition="$list eq null">
+        <div class="more" style="margin-top: .5rem">暂无数据</div>
+    </if>
+
+    </div>
+<notempty name="goodslist">
+    <div class="more">加载更多</div>
+</notempty>
+    <!--</div>-->
+<!--</section>-->
+
+    <!-- nav导航 -->
+</block>
+<block name="script">
+    <script type="text/javascript" src="__MOBILE__/js/dropload.min.js"></script>
+    <!--<script type="text/javascript" src="__MOBILE__/js/loading.js"></script>-->
+    <script type="text/javascript" src="__MOBILE__/js/mui.js"></script>
+    <!--<script>-->
+        <script>
+            var order_status='';
+            $(".order-li").click(function () {
+                $(this).parent().children().removeClass("order-active");
+                $(this).addClass("order-active");
+                order_status=$(".order-active").attr("data-id");
+                $(".content").html('');
+                ajaxList(1,order_status);
+
+            });
+
+            $('body .more').on('click',function(){
+                order_status=$(".order-active").attr("data-id");
+                var page = $('.load_page').last().val();
+                var max_page = $('.load_page_max').last().val();
+                if(page <= max_page){
+                    ajaxList(page,order_status);
+                }
+            });
+
+            function ajaxList(page,order_status){
+                $.ajax({
+                    type:"post",
+                    data:{p:page,order_status:order_status},
+                    url:"{:U('Mobile/UserCenter/ajax_more_order_my')}",
+                    success:function(data){
+                        console.log(data);
+                        if(data.status == 0){
+                            // layer.msg(data.info);
+                            $(".more").hide();
+                        }else{
+                            $(".content").append(data);
+                            $(".more").show();
+                        }
+                    }
+                })
+            }
+           // $(".del_order").click(function () {
+                $('body .del_order').on('click', function () {
+
+                var order_id = $(this).attr('data-id');
+                var a = $(this);
+                layer.confirm('确定删除吗？', {
+                    btn: ['删除','取消'] //按钮
+                }, function(){
+
+                    $.ajax({
+                        type: "post",
+                        data: {order_id: order_id},
+                        url: "{:U('Mobile/UserCenter/del_order_my')}",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status == 0) {
+                                layer.msg(data.info, {icon: 1});
+                            } else {
+                                layer.msg('删除成功', {icon: 1});
+                                a.parent().parent(".order-b").remove();
+                            }
+                        }
+                    })
+                }, function(){
+                    // layer.msg('也可以这样', {
+                    //     time: 20000, //20s后自动关闭
+                    //     btn: ['明白了', '知道了']
+                    // });
+                });
+
+            });
+
+        // $(function(){
+        //     var page = $('.load_page').last().val();
+        //     var max_page = $('.load_page_max').last().val();
+        //     var itemIndex = 0;
+        //     var tab1LoadEnd = false;
+        //     var tab2LoadEnd = false;
+        //     // tab
+        //     $('.order-li').on('click',function(){
+        //         var $this = $(this);
+        //         itemIndex = $this.index();
+        //         $(this).parent().children().removeClass("order-active");
+        //         $(this).addClass("order-active");
+        //
+        //         // 如果选中菜单一
+        //          if(itemIndex == '0'){
+        //         //     // 如果数据没有加载完
+        //              if(!tab1LoadEnd){
+        //                  // 解锁
+        //                  dropload.unlock();
+        //                  dropload.noData(false);
+        //              }else{
+        //                  // 锁定
+        //                  dropload.lock('down');
+        //                  dropload.noData();
+        //              }
+        //              // 如果选中菜单二
+        //          }
+        //          //else if(itemIndex == '1'){
+        //         //     if(!tab2LoadEnd){
+        //         //         // 解锁
+        //         //         dropload.unlock();
+        //         //         dropload.noData(false);
+        //         //     }else{
+        //         //         // 锁定
+        //         //         dropload.lock('down');
+        //         //         dropload.noData();
+        //         //     }
+        //         // }
+        //         // 重置
+        //         dropload.resetload();
+        //     });
+        //
+        //     // dropload
+        //     var dropload = $('body').dropload({
+        //         scrollArea : window ,
+        //         //autoLoad:false,
+        //         loadDownFn : function(me){
+        //             if(page <= max_page){
+        //                 $.ajax({
+        //                     type:"post",
+        //                     data:{p:page},
+        //                     url:"{:U('Mobile/UserCenter/ajax_more_order')}",
+        //                     success:function(data){
+        //                         console.log(data);
+        //                         if(data.status == 0){
+        //                             layer.msg(data.info);
+        //                         }else{
+        //                             // 数据加载完
+        //                             tab1LoadEnd = true;
+        //                             // 锁定
+        //                             me.lock();
+        //                             // 无数据
+        //                             me.noData();
+        //                             $(".content").append(data);
+        //                             me.resetload();
+        //
+        //                         }
+        //                     }
+        //                 })
+        //             }
+        //
+        //         }
+        //     });
+        // });
+
+
+    </script>
+</block>

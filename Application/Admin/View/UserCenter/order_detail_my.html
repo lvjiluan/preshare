@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+</head>
+
+<body class="pad-head osubmit bggary confirm">
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>确认订单</h1>
+    </div>
+    <a class="adress-wapper flex1">
+        <div class="adress">
+            <div class="adr-t flex1">
+                <span>收货人：{$info['consignee']}</span>
+                <span>{$info['mobile']}</span>
+            </div>
+            <!--<div class="adr-sess">-->
+                <!--<img src="__MOBILE__/images/address.png">-->
+                <!--收货地址：{$info['address']}-->
+            <!--</div>-->
+        </div>
+        <span class="adr-more"><img src="__MOBILE__/images/address_icon_more.png" /></span>
+    </a>
+    <div class="pay-detial">
+        <div class="pay-time">
+            订单详情：{$info['add_time']}
+        </div>
+        <div class="pay-item flex1">
+            <!--<div class="pay-i">-->
+                <!--<img src="__MOBILE__/images/class_example.png">-->
+            <!--</div>-->
+            <div class="pay-sess">
+                <h1 class="pay-h1">
+                    {$info['cat_name']} {$info['material_name']}{$info['spec']}
+                </h1>
+                <div class="pay-s flex1">
+                    <div class="pay-l">
+                        <!--<span>生产商：{$info['manufacturer']} </span>-->
+                        <span>备注:{$info['user_note']}</span>
+                    </div>
+                    <div class="pay-r">
+                        <span class="pay-num">x{$info['goods_num']}</span>
+                        <!--<span class="pay-price">￥{$info['goods_price']}</span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="pay-ul">
+        <li>
+            <span>
+                订单创建时间:
+            </span>
+            {$info['add_time']}
+        </li>
+        <if condition="$info['audit_time']">
+            <li>
+            <span>
+                订单确认时间:
+            </span>
+                {$info['audit_time']}
+            </li>
+        </if>
+
+    </ul>
+    <!-- service -->
+    <!--<div class="service flex1">-->
+        <!--<span></span>-->
+        <!--<div class="ser-pri">-->
+            <!--<span style="margin-right:20px;padding-top:50%">总价：<i>￥{$info['total_amount']}</i></span>-->
+
+        <!--</div>-->
+    <!--</div>-->
+</body>

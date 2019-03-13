@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+</head>
+
+<body class="pad-head">
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>真实姓名</h1>
+    </div>
+    <ul class="phone">
+        <li class="flex1">
+            <input placeholder="请输入真实姓名" name="user_name" value="{$userInfo['user_name']}" id="user_name">
+        </li>
+    </ul>
+    <button class="share-btn name_submit">提交</button>
+</body>
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript">
+    $(".name_submit").click(function(){
+        var user_name=$("#user_name").val();
+        $.ajax({
+            type: "post",
+            url: "{:U('Mobile/UserCenter/editUserInfo')}",
+            data: {user_name:user_name},
+            //dataType: "json",
+            success: function(data){
+                if(data.status==1){
+                    window.location.href="/Mobile/UserCenter/index";
+                }else{
+                    layer.msg(data.info);
+                    return false;
+                }
+            }
+        });
+    });
+</script>

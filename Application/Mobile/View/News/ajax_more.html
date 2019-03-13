@@ -1,0 +1,46 @@
+<volist name="list" id="vo">
+    <a class="news-li flex1" href="{:U('News/detail',array('id'=>$vo['article_id']))}">
+        <div class="news-i">
+            <img src="{$vo['thumb_img']}">
+        </div>
+        <div class="news-sess">
+            <h1>{$vo['title']} </h1>
+            <p>{$vo['introduce']|getSubstr=0,40}</p>
+        </div>
+    </a>
+</volist>
+<if condition="$page elt  $page_count">
+<a class="news-nomore news_more" data-id="{$page+1}">
+    <span>查看更多</span>
+</a>
+    <else/>
+    <a class="news-nomore">
+        <span>没有更多内容了</span>
+    </a>
+</if>
+
+<script>
+$(".news_more").click(function(){
+var p=$(this).attr("data-id");
+ajaxList(p);
+});
+
+function ajaxList(page){
+$.ajax({
+type:"post",
+data:{p:page},
+url:"{:U('Mobile/News/ajax_more')}",
+success:function(data){
+console.log(data);
+if(data.status == 0){
+// layer.msg(data.info);
+//  $(".more").hide();
+}else{
+$("#newsList").append(data);
+$(".news_more").hide();
+$(".news-nomore").last().show();
+}
+}
+})
+}
+</script>

@@ -1,0 +1,76 @@
+<extend name="Common/base"/>
+<block name="style">
+    <link rel="stylesheet" type="text/css" href="__HR__/css/resumeList.css"/>
+</block>
+<block name="body">
+<div class="container">
+    <div class="rl_container">
+
+        <div class="cf">
+            <div class="addresume fl">
+                    <input type="button" class="inputbutton" value="上传记录">
+            </div>
+            <div class="fr">
+                <form action="__SELF__" method="get">
+                    <span style="height: 46px">
+                        <input name="keyword" style="height: 46px;border-color:#F2F2F2;padding-left: 12px;border-radius: 4px;width: 240px " placeholder="请输入简历名称" value="{$keyword}" />
+                        <input type="submit" value="搜索" style="background: #0DBCD1;color: white;display:inline-block;width: 80px;height: 46px;border: none;position: relative;left: -4px; cursor: pointer" />
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <div class="rl_title">
+                <span style="width: 7%">序号</span>
+                <span style="width: 25%">简历名称</span>
+                <span style="width: 25%;">上传时间</span>
+                <span style="width: 12%">是否解析</span>
+                <span>操作</span>
+            </div>
+            <div class="rl_item">
+                <ul>
+                    <foreach name="info" item="v">
+                        <li>
+                            <span style="width: 7%">{$v['id']}</span>
+                            <span style="width: 25%">{$v['original_name']}</span>
+                            <span style="width: 25%; text-align: center">{$v['upload_time']|time_format}</span>
+                            <span style="text-align: center; width: 12%"><if condition="$v['content'] eq ''">未解析<else/>已解析</if></span>
+                            <span style="color: #0DBCD1; cursor: pointer" class="analysis" data-url="{$v['upload_url']}"><if condition="$v['content'] eq ''">解析并上传简历<else/>重新解析</if></span>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            <empty name="info">
+                <div class="isdata">
+                    <span>没有数据</span>
+                </div>
+            </empty>
+            <div class="pageList">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+    $(function(){
+        $('.analysis').click(function(){
+            var arr = new Array();
+            arr[0] = $(this).data('url');
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: "{:U('Resume/upload_resume')}",
+                data: {'upload_resume': arr},
+                success: function(data){
+                    toastr(data.info);
+                    if(data.status == 1){
+                        location.reload();
+                    }
+                }
+            });
+        });
+    });
+</script>
+</block>

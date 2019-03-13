@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+    <style>
+        .detial-ul .detial-li{
+            height: auto;
+        }
+        .detial-ul .detial-li>span{
+            border: none;
+            margin-right: 0;
+        }
+        .detial-ul .detial-li>div{
+           flex: 1;
+            border-left: 1px solid #DEDEDE;
+            /*margin-left: .2rem;*/
+            padding-left: .2rem;
+        }
+    </style>
+</head>
+
+<body class="pad-head osubmit bggary">
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>产品详情</h1>
+    </div>
+    <div class="swiper-b">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <volist name="info['imgs']" id="v">
+                <div class="swiper-slide">
+                    <img src="/{$v}" onerror="javascript:this.src='__MOBILE__/images/banner.png';"/>
+                </div>
+                </volist>
+                <!--<div class="swiper-slide">-->
+                    <!--<img src="__MOBILE__//images/banner.png" />-->
+                <!--</div>-->
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
+    </div>
+    <div class="detial">
+        <div class="detial-title flex1">
+            <h1 style="height:60px;line-height:60px">{$info['cat_name']} {$info['material']} {$info['width']}*{$info['height']}</h1>
+            <!--<a href="" class="detial-share">-->
+                <!--<img src="__MOBILE__//images/order_share.png" />-->
+                <!--<p>分享</p>-->
+            <!--</a>-->
+        </div>
+        <div class="detial-name">
+            订单信息：
+        </div>
+        <div class="cout-wapper">
+            <div class="de-cout flex1">
+                <div class="pricr flex1">
+                    <span class=" flex1"><i>￥{$info['price']}</i>/吨</span>
+                    <input type="hidden" name="price" id="price" value="{$info['price']}" min="1"/>
+                    <span>（库存：{$info['store_count']}吨）</span>
+                </div>
+                <div class="cout-b flex1">
+                    <!--<button>-</button>-->
+                    <!--<input value="5">-->
+                    <!--<button>+</button>-->
+                    <button type="button" class="decrease" onClick="goods_cut();">-</button>
+                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"  onkeyup="NumberCheck(this)"/>
+                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                    <button type="button" class="increase" onClick="goods_add();">+</button>
+                </div>
+            </div>
+            <!--<textarea class="cout-text" placeholder="请在此填写您的特殊需求"></textarea>-->
+        </div>
+        <div class="detial-name">
+            货品信息：
+        </div>
+        <ul class="detial-ul">
+            <li class="detial-li flex1">
+                <span>品名:</span>
+                <div>{$info['cat_name']}</div>
+            </li>
+            <li class="detial-li flex1">
+                <span>生产商:</span>
+                <div>{$info['manufacturer']}</div>
+            </li>
+            <li class="detial-li flex1">
+                <span>材质:</span>
+                <div>{$info['material']}</div>
+            </li>
+            <li class="detial-li flex1">
+                <span>等级:</span>
+                <div>{$info['grade']}</div>
+            </li>
+            <li class="detial-li flex1">
+                <span>规格:</span>
+                <div>{$info['width']}*{$info['height']}</div>
+            </li>
+            <!--<li class="detial-li flex1">-->
+                <!--<span>件重:</span>-->
+                <!--25.337吨-->
+            <!--</li>-->
+            <li class="detial-li flex1">
+                <span>说明:</span>
+                <div>{$info['explain']}</div>
+            </li>
+        </ul>
+    </div>
+    <!-- service -->
+
+    <div style="height: 1.5rem"></div>
+    <div class="service flex1">
+        <a class="service-link" href="tel:{:C('MOBILE')}">
+            <img src="__MOBILE__/images/order_service.png" />
+            <p>联系客服</p>
+        </a>
+        <div class="ser-pri">
+            <span>总价：<i id="goods_price">￥{$info.price}</i></span>
+            <button id="sub">确认订单</button>
+        </div>
+    </div>
+    <!-- Swiper JS -->
+    <script src="__MOBILE__/js/swiper.min.js"></script>
+    <script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script>
+        function NumberCheck(t){
+            var num = t.value;
+            var re=/^\d*$/;
+            if(!re.test(num)){
+                isNaN(parseInt(num))?t.value=0:t.value=parseInt(num);
+            }
+        }
+    </script>
+    <script>
+        $("#sub").click(function(){
+            var goods_id="{$info['goods_id']}";
+            var goods_num=$("#number").val();
+            if(goods_num<=0){
+                alert('请输入大于1的吨数');return false;
+            }
+            window.location.href="/Mobile/Order/index?goods_id="+goods_id+"&goods_num="+goods_num;
+        });
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 10,
+            centeredSlides: true,
+            loop: true,
+            // autoplay: {
+            //     delay: 500,
+            //     disableOnInteraction: false,
+            // },
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'fraction',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        function goods_cut(){
+            var num_val=document.getElementById('number');
+            var new_num=num_val.value;
+            var Num = parseInt(new_num);
+            if(Num>1)Num=Num-1;
+            num_val.value=Num;
+            get_goods_price();
+        }
+        function goods_add(){
+            var store_count = {$info.store_count}; // 商品起始库存
+            var num_val=document.getElementById('number');
+            var new_num=num_val.value;
+            var Num = parseInt(new_num);
+            Num=Num+1;
+            if (Num > store_count) {
+                Num = store_count;
+                alert('库存仅剩 ' + store_count + ' 吨');
+            }
+            num_val.value=Num;
+            get_goods_price();
+        }
+        $("#number").change(function(){
+            var store_count = {$info.store_count}; // 商品起始库存
+            var Num = $(this).val();
+
+            if (Num > store_count) {
+                Num = store_count;
+                alert('库存仅剩 ' + store_count + ' 吨');
+                $(this).val(Num);
+            }
+
+            get_goods_price();
+        });
+        //更新产品价格
+        function get_goods_price(){
+            var price=$("#price").val();
+            var goods_num=$("#number").val();
+            var  goods_price=(price * goods_num).toFixed(2);
+            $("#goods_price").html('￥' + goods_price); // 变动价格显示
+        }
+    </script>
+</body>

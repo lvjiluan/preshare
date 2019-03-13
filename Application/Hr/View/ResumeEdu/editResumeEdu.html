@@ -1,0 +1,113 @@
+<extend name="Common/base"/>
+<block name="style">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/fileupload/css/jquery.fileupload.css" media="all">
+    <style>
+        .am-table {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+        .am-btn{
+            padding:5px 15px;font-size:12px
+        }
+    </style>
+</block>
+
+<block name="body">
+    <!-- 内容区域 -->
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">{$info['id'] ? '编辑' : '新增'}教育经历</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <form id="orderForm" action="__ACTION__" method="post" class="ajaxForm">
+                    <table width="100%" class="am-table am-table-bordered">
+                        <thead>
+                            <tr><th colspan="4">基本信息</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div align="right"><em class="must-input">*</em><strong>学校名称：</strong></div></td>
+                                <td><input type="text" id="school_name" name="school_name" value="{$info['school_name']}" style="width:500px" placeholder="请输入学校名称"/></td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><strong>学历：</strong></div></td>
+                                <td colspan="3">
+                                    <select name="degree" id="degree" data-am-selected="{maxHeight: 200}">
+                                        <option value="">请选择学历</option>
+                                        <foreach name="edu_list" item="v">
+                                            <option value="{$v['education_name']}" <if condition="$v.education_name eq $info['degree']">selected</if>>{$v['education_name']}</option>
+                                        </foreach>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><em class="must-input">*</em><strong>专业：</strong></div></td>
+                                <td><input type="text" id="major" name="major" value="{$info['major']}" style="width:500px" placeholder="请输入专业" /></td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><em class="must-input">*</em><strong>开始时间：</strong></div></td>
+                                <td><input type="text" id="starttime" name="starttime" value="{$info['starttime']|date='Y-m-d', ###}"  style="width:500px"/></td>
+                            </tr>
+                            <tr>
+                                <td><div align="right"><em class="must-input">*</em><strong>结束时间：</strong></div></td>
+                                <td><input type="text" id="endtime" name="endtime" value="<if condition='$info.is_current eq 0'>{$info['endtime']|date='Y-m-d', ###}<else/></if>"  style="width:500px"/><br><input type="checkbox" class="check_current" name="is_current" value="1" />至今</td>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        if({$info['is_current']} == 1){
+                                            $('.check_current').attr('checked', 'checked');
+                                        }
+                                    });
+                                </script>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <input type="hidden" name="resume_id" value="{$info['resume_id']}">
+                                    <input type="hidden" name="id" value="{$info['id']}">
+                                    <button type="button" onclick="editResumeEdu()" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </form>         
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/vendor/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.iframe-transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/fileupload/js/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layDate-v5.0.9/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            laydate.render({
+                elem: '#starttime'
+            });
+            laydate.render({
+                elem: '#endtime'
+            });
+        });
+        function editResumeEdu(){
+            $.ajax({
+                url : "{:U('ResumeEdu/editResumeEdu')}",
+                type : "POST",
+                dataType : "json",
+                data : $("#orderForm").serialize(),
+                success : function(data){
+                    toastr(data.info);
+                    if(data.status == 1){
+                        window.parent.location.href='/index.php/Hr/Resume/editResume/resume_id/'+data.data;
+                        setTimeout(layer_reload, 1000);
+                    }
+                }
+            });
+        }
+        function layer_reload() {
+            window.parent.layer.closeAll();
+        }
+    </script>
+</block>

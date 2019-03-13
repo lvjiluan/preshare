@@ -1,0 +1,123 @@
+<extend name="Common/base"/>
+<block name="style">
+    <link type="text/css"  href="__HR__/css/bootstrap.min.css"rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__HR__/css/home.css"/>
+</block>
+<block name="body">
+<div class="container">
+    <div class="h_container">
+        <div class="top clearfix">
+            <div class="h_userinfo fl">
+                <div class="h_userimg">
+
+                    <img src="{$ranking['head_pic']}">
+                </div>
+                <p>{$ranking.nickname}</p>
+            </div>
+            <div class="rightItem fr ">
+                <div class="up">
+                    <ul class="clearfix">
+                        <li class="col-md-3 col-sm-6 fr">
+                            <div class="num">
+                                {$ranking['resume_ranking']}
+                            </div>
+                            <div class="name">
+                                <img src="__HR__/images/18.png">
+                                HR全球排名
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-sm-6">
+                            <div class="num1">
+                               {$ranking['resume_number']}
+                            </div>
+                            <div class="name">
+                                <img src="__HR__/images/33.png">
+                                简历数量
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-sm-6">
+                            <div class="num2">
+                                {$ranking.month_amount}<span>元</span>
+                            </div>
+                            <div class="name">
+                                <img src="__HR__/images/21.png">
+                                本月任务总收益
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-sm-6">
+                            <div class="num2">
+                                {$ranking['year_amount']}<span>元</span>
+                            </div>
+                            <div class="name">
+                                <img src="__HR__/images/21.png">
+                                总收益
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="down">
+                    <input class="d_button release_recruit" type="button" value="+ 发布悬赏">
+                    <input class="d_button" type="button" value="去赚钱" onclick="javascript: toastr('前往小程序，完成任务，获得赏金~');">
+                    <input class="d_button release_resume" type="button" value="上传简历赚奖金">
+                    <input class="d_button" type="button" value="推荐人才赚佣金" onclick="javascript: toastr('请前往小程序推荐~');">
+                    <input class="d_button" type="button" value="认证简历赚奖金" onclick="javascript: toastr('请前往小程序认证~');">
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="h_title">
+                <span>序号</span>
+                <span>悬赏职位</span>
+                <span>招聘人数</span>
+                <span>岗位性质</span>
+                <span>语言要求</span>
+                <span>工作地区</span>
+                <span>悬赏令牌</span>
+                <span>添加时间</span>
+                <span>匹配度</span>
+                <span>操作</span>
+            </div>
+            <div class="h_items">
+                <ul>
+                    <foreach name="info" item="v">
+                        <li>
+                            <span>{$v['id']}</span>
+                            <span>{$v['position_name']}</span>
+                            <span>{$v['recruit_num']}</span>
+                            <span>{$v['nature']}</span>
+                            <span>{$v['language_ability']}</span>
+                            <span>{$v['job_area']}</span>
+                            <span>{$v['commission']|fen_to_yuan}</span>
+                            <span>{$v['add_time']|time_format}</span>
+                            <span><if condition="$v['resume_matching'] eq 1">已匹配<else/>未匹配</if></span>
+                            <span><if condition="$v['resume_matching'] eq 1"><span style="width: 60px; cursor: pointer; color: #0DBCD1" onclick="javascript: toastr('请前往小程序推荐~');">去推荐</span><else/><a
+                                    href="{:U('Resume/editResume')}" style="width: 60px; cursor: pointer; color: #0DBCD1" >去上传</a></if></span>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            <empty name="info">
+                <div class="isdata">
+                    <span>没有数据</span>
+                </div>
+            </empty>
+            <div class="pageList">
+                {$page}
+            </div>
+        </div>
+
+    </div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+    $(function(){
+        $('.release_recruit').click(function(){
+            location.href="{:U('Recruit/editRecruit')}";
+        });
+        $('.release_resume').click(function(){
+            location.href="{:U('Resume/editResume')}";
+        });
+    });
+</script>
+</block>

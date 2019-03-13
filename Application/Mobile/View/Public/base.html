@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <block name="style">
+
+    </block>
+</head>
+
+<block name="body"> </block>
+<div class="nav-wapper flex1">
+    <a class="nav-li <if condition='$yangshi eq 1'>nav-active</if>" href="{:U('Mobile/Index/index')}">
+        <img src=" <if condition='$yangshi eq 1'>__MOBILE__/images/tabbar_btn_home_select.png<else/>__MOBILE__/images/tabbar_btn_home_nor.png</if>" />
+        <p>首页</p>
+    </a>
+    <a class="nav-li <if condition='$yangshi eq 2'>nav-active</if>" href="{:U('Mobile/Goods/index')}">
+        <img src=" <if condition='$yangshi eq 2'>__MOBILE__/images/tabbar_btn_pro_select.png<else/>__MOBILE__/images/tabbar_btn_pro_nor.png</if>" />
+        <p>产品</p>
+    </a>
+    <a class="nav-li" href="{:U('Mobile/Order/add_order_my')}">
+        <img src="__MOBILE__/images/tabbar_btn_cust_nor.png" />
+        <p>订轧</p>
+    </a>
+    <a class="nav-li <if condition='$yangshi eq 3'>nav-active</if>" href="{:U('Mobile/UserCenter/order_list')}">
+        <img src=" <if condition='$yangshi eq 3'>__MOBILE__/images/tabbar_btn_order_select.png<else/>__MOBILE__/images/tabbar_btn_order_nor.png</if>" />
+        <p>订单</p>
+    </a>
+    <a class="nav-li <if condition='$yangshi eq 4'>nav-active</if>" href="{:U('Mobile/UserCenter/index')}">
+        <img src=" <if condition='$yangshi eq 4'>__MOBILE__/images/tabbar_btn_me_seect.png<else/>__MOBILE__/images/tabbar_btn_me_nor.png</if>" />
+        <p>我的</p>
+    </a>
+</div>
+    <!-- /内容区 -->
+    <!--[if gte IE 9]><!-->
+<script src="__MOBILE__/js/jquery-3.1.1.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+    <block name="script"></block>
+</body>
+</html>
+

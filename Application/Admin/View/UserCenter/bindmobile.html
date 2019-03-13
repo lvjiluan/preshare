@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://xiaoshuguan.cn/yuyue.html -->
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,shrink-to-fit=no" name="viewport">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="__MOBILE__/css/swiper.min.css">
+    <link rel="stylesheet" href="__MOBILE__/css/cur.css">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+</head>
+
+<body class="pad-head">
+    <!-- head -->
+    <div class="head flex1">
+        <a class="head-back" href="javascript:history.back(-1)">
+            <img src="__MOBILE__/images/icon_back.png">
+        </a>
+        <h1>绑定手机号</h1>
+    </div>
+    <ul class="phone">
+        <li class="flex1">
+            <span>+86</span>
+            <input placeholder="请输入手机号" id="mobile" value="{$userInfo['mobile']}">
+        </li>
+        <li class="flex1">
+            <input placeholder="请输入验证码" id="sms_code">
+            <button class="sendcode">获取验证码</button>
+        </li>
+    </ul>
+    <button class="share-btn">提交</button>
+</body>

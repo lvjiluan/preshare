@@ -1,0 +1,190 @@
+.container {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.rc_container {
+    padding: 25px 40px 0 44px;
+    height: 100%;
+    background: #EEF0F5;
+}
+.inputdate2{
+    margin-right: 14px;
+}
+.inputdate1{
+    height: 46px;
+    /*border: none;*/
+    margin-left: 8px;
+}
+.rl_find {
+    height: 46px;
+    background: white;
+    display: inline-block;
+}
+.rl_find button{
+    height: 46px;
+    width: 66px;
+    background: #0DBCD1;
+    color: white;
+    display: inline-block;
+    border-color: #EFEFEF;
+}
+.left_content {
+    background: white;
+    width: 68%;
+    display: inline-block;
+    padding: 0 40px;
+    padding-bottom: 35px;
+}
+
+.right_content {
+    background: white;
+    width: 30%;
+    height: 100%;
+    display: inline-block;
+}
+
+.left_content > ul > li {
+    height: 85px;
+    /*line-height: 85px;*/
+    border-bottom: 1px solid #EFEFEF;
+}
+.isdata{
+    text-align: center;
+    color: white;
+    font-size: 26px;
+    padding: 50px 0;
+}
+.isdata span{
+    background: #0DBCD1;
+    width: 240px;
+    display: inline-block;
+    padding: 10px 0;
+    border-radius: 4px;
+}
+.rc_op {
+    line-height: 85px;
+    color: #0DBCD1;
+    font-size: 16px;
+}
+
+.rc_op span {
+    margin-left: 36px;
+    cursor: pointer;
+}
+
+.rc_info {
+    padding-top: 20px;
+}
+
+.rc_date {
+    color: #CECECE;
+    font-size: 16px;
+}
+
+.rc_title span:nth-child(1) {
+    color: #555555;
+    font-size: 16px;
+    margin-right: 6px;
+}
+
+.rc_title span:nth-child(2) {
+    color: #FC784C;
+    font-size: 20px;
+}
+
+.rc_money {
+    padding: 28px 30px;
+    color: #62656E;
+    font-size: 20px;
+}
+
+.rc_money div:nth-child(1) {
+    padding: 50px 0;
+    text-align: center;
+    color: #FC784C;
+    font-size: 30px;
+}
+
+.rc_money div:nth-child(2) {
+
+}
+
+.inputtext {
+    width: 100%;
+    height: 44px;
+    border-color: #DEDEDE;
+    border-radius: 4px;
+    padding-left: 12px;
+}
+
+.rc_radio {
+    padding-left: 17px;
+}
+
+.rc_radio li {
+    height: 60px;
+    font-size: 16px;
+    color: #62656E;
+    background: url("../images/radio0.png") left top no-repeat;
+    background-size: 21px 21px;
+    cursor: pointer;
+}
+
+.rc_radio li img {
+    margin-right: 26px;
+    margin-left: 42px;
+}
+
+.rc_radio .ra_active {
+    background: url("../images/radio1.png") left top no-repeat;
+    background-size: 21px 21px;
+}
+
+.bankcard {
+    padding:0 36px;
+}
+
+.bankcard li {
+    cursor: pointer;
+    border: 1px solid #F4F4F4;
+    border-radius: 9px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+.bankcard li div span{
+    width: 58px;
+    color: #999999;
+    display: inline-block;
+}
+.bankcard .bc_active{
+    border: 1px solid #0DBCD1;
+    background:rgba(245,254,255,1);
+}
+.inputbuttonstyle{
+    width: 100%;
+    padding: 40px 50px;
+}
+.inputbutton{
+    width: 100%;
+    height: 44px;
+    border:1px solid rgba(13,188,209,1);
+    opacity:1;
+    border-radius:4px;
+    font-size:16px;
+    font-weight:400;
+    color:rgba(13,188,209,1);
+    background: white;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__MOBILE__/css/style.css">
+</block>
+<block name="body">
+<body class="bggary">
+    <!-- 用户 -->
+    <div class="user flex1">
+        <a class="user-edi" href="{:U('UserCenter/messagelist')}">
+            <img src="__MOBILE__/images/edi.png">
+        </a>
+        <div class="user-b">
+            <span><img src="{$userInfo['head_pic']}"></span>
+            <p style="text-align: center">{$userInfo['mobile']?$userInfo['mobile']:$userInfo['nickname']}</p>
+        </div>
+    </div>
+    <!-- list列表 -->
+    <div class="user-ul">
+        <a class="user-li flex1" href="{:U('UserCenter/order_list')}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_list.png" />
+                <span>所有订单</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        <a class="user-li flex1" href="{:U('UserCenter/order_list_my')}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_cust.png" />
+                <span>我的订制</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        <a class="user-li flex1" href="{:U('Mobile/UserCenter/addEditAddress',array('address_id'=>$userInfo['address_id']))}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_address.png" />
+                <span>收货地址</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        <a class="user-li flex1" href="{:U('Mobile/UserCenter/editUserInfo')}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_name.png" />
+                <span>真实姓名</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        <if condition="$userInfo.mobile eq ''">
+        <a class="user-li flex1" href="{:U('Mobile/Index/bindMobile')}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_tel.png" />
+                <span>绑定手机号</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        <else/>
+        <a class="user-li flex1" href="{:U('Mobile/Index/delBindMobile')}">
+            <div class="user-l flex1">
+                <img src="__MOBILE__/images/me_icon_tel.png" />
+                <span>解绑手机号</span>
+            </div>
+            <span class="user-more">
+                <img src="__MOBILE__/images/more.png" />
+            </span>
+        </a>
+        </if>
+    </div>
+    <!--<button class="btnup">退出</button>-->
+    <!-- nav导航 -->
+</block>
